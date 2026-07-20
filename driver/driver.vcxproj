@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{0b8eacb8-a4b3-4f37-ba0c-2aa50f087351}</ProjectGuid>
+    <TemplateGuid>{dd38f7fc-d7bd-488b-9242-7d8754cde80d}</TemplateGuid>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <Configuration>Debug</Configuration>
+    <Platform Condition="'$(Platform)' == ''">x64</Platform>
+    <RootNamespace>roseware_driver</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <ProjectName>roseware_driver</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <OutDir>..\output directory\</OutDir>
+    <IntDir>.\intermediate directory\</IntDir>
+    <TargetName>roseware_driver</TargetName>
+    <TargetExt>.sys</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <Optimization>MaxSpeed</Optimization>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <DisableSpecificWarnings>4201;4996;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <AdditionalIncludeDirectories>C:\Program Files (x86)\Windows Kits\10\Include\10.0.28000.0\km;C:\Program Files (x86)\Windows Kits\10\Include\10.0.28000.0\km\crt;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <FloatingPointExceptions>false</FloatingPointExceptions>
+      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
+      <ExceptionHandling>false</ExceptionHandling>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <ControlFlowGuard>false</ControlFlowGuard>
+      <OmitFramePointers>
+      </OmitFramePointers>
+      <CallingConvention>Cdecl</CallingConvention>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <TreatWarningAsError>false</TreatWarningAsError>
+      <AdditionalOptions>/std:c++20 %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>_AMD64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>/ENTRY:driver_entry /NODEFAULTLIB /MERGE:_TEXT=.text /MERGE:_PAGE=PAGE /MERGE:_RDATA=.rdata %(AdditionalOptions)</AdditionalOptions>
+      <SubSystem>Native</SubSystem>
+      <AdditionalDependencies>ntoskrnl.lib;hal.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files (x86)\Windows Kits\10\lib\10.0.28000.0\km\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <FilesToPackage Include="$(TargetPath)" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="project\communication\communication.cpp" />
+    <ClCompile Include="project\communication\handler.cpp" />
+    <ClCompile Include="project\cr3 decryption\cr3_decryption.cpp" />
+    <ClCompile Include="project\interrupts\interrupts.cpp" />
+    <ClCompile Include="project\logging\logging.cpp" />
+    <ClCompile Include="project\offset_resolver.cpp" />
+    <ClCompile Include="project\physmem\physmem.cpp" />
+    <ClCompile Include="project\project_utility.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="project\communication\communication.hpp" />
+    <ClInclude Include="project\communication\shared_structs.hpp" />
+    <ClInclude Include="project\communication\shellcode.hpp" />
+    <ClInclude Include="project\cr3 decryption\cr3_decryption.hpp" />
+    <ClInclude Include="project\interrupts\interrupts.hpp" />
+    <ClInclude Include="project\interrupts\interrupt_structs.hpp" />
+    <ClInclude Include="project\loader_offsets.hpp" />
+    <ClInclude Include="project\logging\logging.hpp" />
+    <ClInclude Include="project\offset_resolver.hpp" />
+    <ClInclude Include="project\physmem\page_table_helpers.hpp" />
+    <ClInclude Include="project\physmem\physmem.hpp" />
+    <ClInclude Include="project\physmem\physmem_structs.hpp" />
+    <ClInclude Include="project\project_api.hpp" />
+    <ClInclude Include="project\project_includes.hpp" />
+    <ClInclude Include="project\project_utility.hpp" />
+    <ClInclude Include="project\windows_structs.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <MASM Include="project\communication\comm_assembly.asm" />
+    <MASM Include="project\interrupts\interrupts_asm.asm" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
+  </ImportGroup>
+</Project>

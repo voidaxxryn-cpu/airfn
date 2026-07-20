@@ -1,0 +1,32 @@
+name: refresh-offsets
+on:
+  schedule:
+    - cron: "*/30 * * * *"   # every 30 min
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  poll:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+
+      - name: Poll cheatoffsets.com
+        run: node scripts/gen_offsets.mjs
+
+      - name: Commit if changed
+        run: |
+          git config user.name  "airfn-offsets-bot"
+          git config user.email "bot@airfn.local"
+          if [ -n "$(git status --porcelain airfn/offsets/offsets.h airfn/offsets/.etag)" ]; then
+            git add airfn/offsets/offsets.h airfn/offsets/.etag
+            git commit -m "offsets: refresh from cheatoffsets.com"
+            git push
+          else
+            echo "no change"
+          fi

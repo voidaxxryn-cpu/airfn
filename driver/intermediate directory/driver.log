@@ -1,0 +1,15 @@
+﻿  Assembling project\communication\comm_assembly.asm...
+  Assembling project\interrupts\interrupts_asm.asm...
+  main.cpp
+  communication.cpp
+  handler.cpp
+  cr3_decryption.cpp
+  interrupts.cpp
+  logging.cpp
+  offset_resolver.cpp
+  physmem.cpp
+  project_utility.cpp
+  main.obj : MSIL .netmodule or module compiled with /GL found; restarting link with /LTCG; add /LTCG to the link command line to improve linker performance
+  Generating code
+  Finished generating code
+  driver.vcxproj -> C:\Users\hjhh\Downloads\SofMainFNBaseV5\SofMainFNBaseV5\priv driver\fuse driver\output directory\roseware_driver.sys

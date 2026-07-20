@@ -1,0 +1,31 @@
+name: build
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main]
+
+jobs:
+  airfn-client:
+    name: airfn (usermode client)
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure (CMake)
+        run: cmake --preset msvc-x64-release
+
+      - name: Build
+        run: cmake --build --preset msvc-x64-release --parallel
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: airfn-${{ github.sha }}
+          path: build/msvc-x64-release/bin/Release/airfn.exe
+          if-no-files-found: warn
+
+  # Driver + mapper require WDK, which isn't preinstalled on the runner image.
+  # We skip them in CI for now — truly will validate driver builds locally
+  # against a snapshot VM (physmem.sln, Release|x64).
+  # A separate self-hosted runner with WDK will be wired up in week 2.

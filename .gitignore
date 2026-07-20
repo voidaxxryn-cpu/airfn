@@ -1,0 +1,7 @@
+build/
+Intermediate/
+output directory/
+*.user
+*.suo
+.vs/
+node_modules/
